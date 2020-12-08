@@ -1,65 +1,104 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import { Box, Button, Flex, Text, Icon, Link, Stack } from '@chakra-ui/react';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+import { useAuth } from '@/lib/auth';
+import { getAllFeedback, getSite } from '@/lib/db-admin';
+import Feedback from '@/components/Feedback';
+import FeedbackLink from '@/components/FeedbackLink';
+import LoginButtons from '@/components/LoginButtons';
+import Footer from '@/components/Footer';
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+const SITE_ID = process.env.NEXT_PUBLIC_HOME_PAGE_SITE_ID;
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+export async function getStaticProps(context) {
+  const { feedback } = await getAllFeedback(SITE_ID);
+  const { site } = await getSite(SITE_ID);
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+  return {
+    props: {
+      allFeedback: feedback,
+      site
+    },
+    revalidate: 1
+  };
 }
+
+const Home = ({ allFeedback, site }) => {
+  const auth = useAuth();
+
+  return (
+    <>
+      <Box bg="gray.100" py={16}>
+        <Flex as="main" direction="column" maxW="700px" margin="0 auto">
+          <Head>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+              if (document.cookie && document.cookie.includes('fast-feedback-auth')) {
+                window.location.href = "/sites"
+              }
+            `
+              }}
+            />
+          </Head>
+          <Icon color="black" name="logo" size="48px" mb={2} />
+          <Text mb={4} fontSize="lg" py={4}>
+            <Text as="span" fontWeight="bold" display="inline">
+              Fast Feedback
+            </Text>
+            {' is being built as part of '}
+            <Link
+              href="https://react2025.com"
+              isExternal
+              textDecoration="underline"
+            >
+              React 2025
+            </Link>
+            {`. It's the easiest way to add comments or reviews to your static site. It's still a work-in-progress, but you can try it out by leaving a comment below.`}
+          </Text>
+          {auth.user ? (
+            <Button
+              as="a"
+              href="/sites"
+              backgroundColor="gray.900"
+              color="white"
+              fontWeight="medium"
+              mt={4}
+              maxW="200px"
+              _hover={{ bg: 'gray.700' }}
+              _active={{
+                bg: 'gray.800',
+                transform: 'scale(0.95)'
+              }}
+            >
+              View Dashboard
+            </Button>
+          ) : (
+            <LoginButtons />
+          )}
+        </Flex>
+      </Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+        width="full"
+        maxWidth="700px"
+        margin="0 auto"
+        mt={8}
+      >
+        <FeedbackLink paths={[SITE_ID]} />
+        {allFeedback.map((feedback, index) => (
+          <Feedback
+            key={feedback.id}
+            settings={site?.settings}
+            isLast={index === allFeedback.length - 1}
+            {...feedback}
+          />
+        ))}
+      </Box>
+      <Footer />
+    </>
+  );
+};
+
+export default Home;
