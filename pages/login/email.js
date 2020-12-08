@@ -7,14 +7,14 @@ import {
   FormLabel,
   Input,
   Stack,
-  Icon,
   useToast
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { useAuth } from '@/lib/auth';
 import Page from '@/components/Page';
+import { LogoIcon } from '@/styles/theme'
 
 const Login = () => {
   const toast = useToast();
@@ -54,7 +54,7 @@ const Login = () => {
       >
         <Flex justify="center">
           <Box as="a" href="/" aria-label="Back to homepage">
-            <Icon color="black" name="logo" size="64px" mb={4} />
+            <LogoIcon color="black" size="64px" mb={4} />
           </Box>
         </Flex>
         <FormControl isInvalid={errors.email && errors.email.message}>

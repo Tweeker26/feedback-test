@@ -61,7 +61,7 @@ const DeleteFeedbackButton = ({ feedbackId }) => {
             <Button ref={cancelRef} onClick={onClose}>
               Cancel
             </Button>
-            <Button fontWeight="bold" variantColor="red" onClick={onDelete} ml={3}>
+            <Button fontWeight="bold" colorScheme="red" onClick={onDelete} ml={3}>
               Delete
             </Button>
           </AlertDialogFooter>

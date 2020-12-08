@@ -3,6 +3,7 @@ import NextLink from 'next/link';
 import { Box, Button, Flex, Link, Avatar, Icon } from '@chakra-ui/react';
 
 import { useAuth } from '@/lib/auth';
+import { LogoIcon } from '@/styles/theme'
 
 const Navbar = ({ children }) => {
   const { user } = useAuth();
@@ -23,7 +24,7 @@ const Navbar = ({ children }) => {
         <Flex align="center">
           <NextLink href="/" passHref>
             <Link>
-              <Icon name="logo" size="24px" mr={8} />
+              <LogoIcon size="24px" mr={8} />
             </Link>
           </NextLink>
         </Flex>

@@ -1,6 +1,7 @@
 import { Button, Stack } from '@chakra-ui/react';
 
 import { useAuth } from '@/lib/auth';
+import { GoogleIcon, GithubIcon } from '@/styles/theme';
 
 const LoginButtons = () => {
   const auth = useAuth();
@@ -12,7 +13,7 @@ const LoginButtons = () => {
         backgroundColor="gray.900"
         color="white"
         fontWeight="medium"
-        leftIcon="github"
+        leftIcon={<GithubIcon />}
         mt={4}
         _hover={{ bg: 'gray.700' }}
         _active={{
@@ -28,7 +29,7 @@ const LoginButtons = () => {
         color="gray.900"
         variant="outline"
         fontWeight="medium"
-        leftIcon="google"
+        leftIcon={<GoogleIcon />}
         mt={4}
         _hover={{ bg: 'gray.100' }}
         _active={{

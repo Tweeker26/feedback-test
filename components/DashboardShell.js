@@ -4,6 +4,7 @@ import { Box, Button, Flex, Link, Avatar, Icon } from '@chakra-ui/react';
 
 import { useAuth } from '@/lib/auth';
 import Footer from './Footer';
+import { LogoIcon } from '@/styles/theme'
 
 const DashboardShell = ({ children }) => {
   const { user } = useAuth();
@@ -30,7 +31,7 @@ const DashboardShell = ({ children }) => {
           <Flex align="center">
             <NextLink href="/" passHref>
               <Link>
-                <Icon name="logo" size="24px" mr={8} />
+                <LogoIcon size="24px" mr={8} />
               </Link>
             </NextLink>
             <NextLink href="/sites" passHref>

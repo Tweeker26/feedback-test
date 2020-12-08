@@ -1,6 +1,8 @@
-import { Box, Button, Flex, Stack, Icon } from '@chakra-ui/react';
+import { Box, Button, Flex, Stack, Icon, Link } from '@chakra-ui/react'
 import { useAuth } from '@/lib/auth';
 import Page from '@/components/Page';
+import { GithubIcon, GoogleIcon, LogoIcon } from '@/styles/theme'
+import React from 'react'
 
 const Login = () => {
   const auth = useAuth();
@@ -24,7 +26,7 @@ const Login = () => {
       >
         <Flex justify="center">
           <Box as="a" href="/" aria-label="Back to homepage">
-            <Icon color="black" name="logo" size="56px" mb={4} />
+            <LogoIcon color="black" size="56px" mb={4} />
           </Box>
         </Flex>
         <Button
@@ -32,7 +34,7 @@ const Login = () => {
           backgroundColor="gray.900"
           color="white"
           fontWeight="medium"
-          leftIcon="github"
+          leftIcon={<GithubIcon />}
           mt={2}
           h="50px"
           _hover={{ bg: 'gray.700' }}
@@ -49,7 +51,7 @@ const Login = () => {
           color="gray.900"
           variant="outline"
           fontWeight="medium"
-          leftIcon="google"
+          leftIcon={<GoogleIcon />}
           mt={2}
           h="50px"
           _hover={{ bg: 'gray.100' }}

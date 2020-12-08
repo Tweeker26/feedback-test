@@ -62,7 +62,7 @@ const DeleteSitebutton = ({ siteId }) => {
             </Button>
             <Button
               fontWeight="bold"
-              variantColor="red"
+              colorScheme="red"
               onClick={onDelete}
               ml={3}
             >

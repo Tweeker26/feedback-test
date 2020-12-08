@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ThemeProvider, CSSReset } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { Global, css } from '@emotion/react';
 import { MDXProvider } from '@mdx-js/react';
 import { DefaultSeo } from 'next-seo';
@@ -9,7 +9,7 @@ import * as Fathom from 'fathom-client';
 
 import MDXComponents from '@/components/MDXComponents';
 import { AuthProvider } from '@/lib/auth';
-import customTheme from '@/styles/theme';
+import theme from '@/styles/theme';
 
 import SEO from '../next-seo.config';
 
@@ -23,7 +23,6 @@ const GlobalStyle = ({ children }) => {
       <Head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
-      <CSSReset />
       <Global
         styles={css`
           html {
@@ -51,7 +50,7 @@ const App = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <ThemeProvider theme={customTheme}>
+    <ChakraProvider theme={theme} resetCSS>
       <AuthProvider>
         <MDXProvider components={MDXComponents}>
           <DefaultSeo {...SEO} />
@@ -59,7 +58,7 @@ const App = ({ Component, pageProps }) => {
           <Component {...pageProps} />
         </MDXProvider>
       </AuthProvider>
-    </ThemeProvider>
+    </ChakraProvider>
   );
 };
 

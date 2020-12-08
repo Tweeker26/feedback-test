@@ -7,6 +7,8 @@ import Feedback from '@/components/Feedback';
 import FeedbackLink from '@/components/FeedbackLink';
 import LoginButtons from '@/components/LoginButtons';
 import Footer from '@/components/Footer';
+import { LogoIcon } from '@/styles/theme'
+import React from 'react'
 
 const SITE_ID = process.env.NEXT_PUBLIC_HOME_PAGE_SITE_ID;
 
@@ -41,7 +43,7 @@ const Home = ({ allFeedback, site }) => {
               }}
             />
           </Head>
-          <Icon color="black" name="logo" size="48px" mb={2} />
+          <LogoIcon color="black" size="48px" mb={2} />
           <Text mb={4} fontSize="lg" py={4}>
             <Text as="span" fontWeight="bold" display="inline">
               Fast Feedback
